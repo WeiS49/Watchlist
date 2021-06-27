@@ -6,16 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="icon" href="{{ url_for('static', filename='fivet.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>{{ name }}'s Watchlist</h2>
+    <h2>
+        <img class="avatar" src="{{ url_for('static', filename='house.png') }}" alt="">
+        {{ name }}'s Watchlist
+    </h2>
     {# 使用length过滤器(类似函数)获取列表movies长度 #}
     <p>{{ movies|length }} Titles</p>
-    <ul>
+    <ul class="movie-list">
         {% for movie in movies %}
         <li>{{ movie.title }} - {{ movie.year }}</li>
         {% endfor %}
     </ul>
+    <img class="view" src="{{ url_for('static', filename='view.png') }}" alt="">
     <footer>
         <small>&copy; 2018 <a href="http://www.google.com">Google</a></small>
     </footer>

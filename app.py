@@ -4,7 +4,7 @@ from flask import escape, url_for, render_template
 
 app = Flask(__name__)
 
-name = 'Grey Li'
+name = 'W S'
 movies = [
     {'title': 'My Neighbor Totoro', 'year': '1988'},
     {'title': 'Dead Poets Society', 'year': '1989'},
@@ -41,7 +41,6 @@ def user_page(name):
     如果有多个页面, 则返回最下面的地址
 """
 @app.route('/test')
-@app.route('/test2')
 def test_url_for():
     print(f"输出: {url_for('index')}")
     print(f"输出: {url_for('hello')}", type(url_for('hello')))
