@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 import click
 import os
 
-
 app = Flask(__name__)
 # 创建数据库连接地址
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_path, 'data.db')
@@ -44,7 +43,7 @@ def forge():
     for movie in movies:
         m = Movie(title=movie['title'], year=movie['year'])
         db.session.add(m)
-        
+
     db.session.commit()
     click.echo('Done.')
 
@@ -62,11 +61,25 @@ class Movie(db.Model):
     title = db.Column(db.String(60))
     year = db.Column(db.String(4))
 
+"""  
+    注册上下文处理函数
+    在之后的页面中, 自动传入处理内容(为了效率, 建议传入最小集合)
+"""
+@app.context_processor
+def inject_user():
+    user = User.query.first()
+    return dict(user=user)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # user = User.query.first()
+    return render_template('404.html'), 404
+
 @app.route('/')
 def index():
     user = User.query.first()
     movies = Movie.query.all()
-    return render_template('index.html', user=user, movies=movies)
+    return render_template('index.html', movies=movies)
     # return render_template('index.html', name=name, movies=movies)
     # return 'hello, world!'
 
@@ -96,6 +109,7 @@ def test_url_for():
     print(f"输出: {url_for('user_page', name='mike')}")
     print(f"输出: {url_for('test_url_for')}", type(url_for('test_url_for')))
     return 'test page'
+
 
 
 
