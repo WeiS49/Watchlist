@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {# 创建模板的模板 #}
+
 <head>
     {# 声明block的名字, 方便查找 #}
     {% block head %}
@@ -11,7 +12,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     {% endblock %}
 </head>
+
 <body>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
     <h2>
         <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='house.png') }}">
         {{ user.name }}'s Watchlist
@@ -26,4 +31,5 @@
         <small>&copy; 2018 <a href="http://helloflask.com/tutorial">HelloFlask</a></small>
     </footer>
 </body>
+
 </html>
